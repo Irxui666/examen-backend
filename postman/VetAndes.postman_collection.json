@@ -1,0 +1,2212 @@
+{
+  "info": {
+    "name": "VetAndes API - Examen Parcial II B",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Ejemplos reales capturados con el perfil H2 de pruebas. Ejecutar login antes de las operaciones protegidas. El backend de entrega usa Oracle."
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080/api/v1"
+    },
+    {
+      "key": "tokenAdmin",
+      "value": ""
+    },
+    {
+      "key": "tokenRecepcion",
+      "value": ""
+    },
+    {
+      "key": "tokenVeterinario",
+      "value": ""
+    },
+    {
+      "key": "prestacionId",
+      "value": ""
+    },
+    {
+      "key": "atencionId",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "Login admin",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/auth/login",
+        "auth": {
+          "type": "noauth"
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"username\": \"admin\",\n  \"password\": \"Vet2026*\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Estado 200', () => pm.response.to.have.status(200));",
+              "pm.collectionVariables.set('tokenAdmin', pm.response.json().token);"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "name": "200",
+          "originalRequest": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/auth/login",
+            "auth": {
+              "type": "noauth"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"admin\",\n  \"password\": \"Vet2026*\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"token\": \"<token generado por el login>\",\n  \"tipo\": \"Bearer\",\n  \"expiraEnSegundos\": 3600,\n  \"username\": \"admin\",\n  \"nombreCompleto\": \"Administrador VetAndes\",\n  \"roles\": [\n    \"ADMIN\"\n  ],\n  \"permisos\": [\n    \"ATENCION_ANULAR\",\n    \"ATENCION_LEER\",\n    \"ATENCION_REGISTRAR\",\n    \"MASCOTA_ESCRIBIR\",\n    \"MASCOTA_LEER\",\n    \"PRESTACION_ESCRIBIR\",\n    \"PRESTACION_LEER\",\n    \"REPORTE_VER\"\n  ]\n}"
+        }
+      ]
+    },
+    {
+      "name": "Login recepcion",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/auth/login",
+        "auth": {
+          "type": "noauth"
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"username\": \"recepcion\",\n  \"password\": \"Vet2026*\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Estado 200', () => pm.response.to.have.status(200));",
+              "pm.collectionVariables.set('tokenRecepcion', pm.response.json().token);"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "name": "200",
+          "originalRequest": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/auth/login",
+            "auth": {
+              "type": "noauth"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"recepcion\",\n  \"password\": \"Vet2026*\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"token\": \"<token generado por el login>\",\n  \"tipo\": \"Bearer\",\n  \"expiraEnSegundos\": 3600,\n  \"username\": \"recepcion\",\n  \"nombreCompleto\": \"Recepcionista VetAndes\",\n  \"roles\": [\n    \"RECEPCIONISTA\"\n  ],\n  \"permisos\": [\n    \"ATENCION_LEER\",\n    \"ATENCION_REGISTRAR\",\n    \"MASCOTA_ESCRIBIR\",\n    \"MASCOTA_LEER\",\n    \"PRESTACION_LEER\"\n  ]\n}"
+        }
+      ]
+    },
+    {
+      "name": "Login veterinario",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/auth/login",
+        "auth": {
+          "type": "noauth"
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"username\": \"veterinario\",\n  \"password\": \"Vet2026*\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Estado 200', () => pm.response.to.have.status(200));",
+              "pm.collectionVariables.set('tokenVeterinario', pm.response.json().token);"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "name": "200",
+          "originalRequest": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/auth/login",
+            "auth": {
+              "type": "noauth"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"veterinario\",\n  \"password\": \"Vet2026*\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"token\": \"<token generado por el login>\",\n  \"tipo\": \"Bearer\",\n  \"expiraEnSegundos\": 3600,\n  \"username\": \"veterinario\",\n  \"nombreCompleto\": \"Veterinario VetAndes\",\n  \"roles\": [\n    \"VETERINARIO\"\n  ],\n  \"permisos\": [\n    \"ATENCION_ANULAR\",\n    \"ATENCION_LEER\",\n    \"MASCOTA_LEER\",\n    \"PRESTACION_ESCRIBIR\",\n    \"PRESTACION_LEER\",\n    \"REPORTE_VER\"\n  ]\n}"
+        }
+      ]
+    },
+    {
+      "name": "Usuario actual",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/auth/me",
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{tokenAdmin}}",
+              "type": "string"
+            }
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Estado 200', () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "name": "200",
+          "originalRequest": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/auth/me",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{tokenAdmin}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"username\": \"admin\",\n  \"nombreCompleto\": \"Administrador VetAndes\",\n  \"roles\": [\n    \"ADMIN\"\n  ],\n  \"permisos\": [\n    \"ATENCION_ANULAR\",\n    \"ATENCION_LEER\",\n    \"ATENCION_REGISTRAR\",\n    \"MASCOTA_ESCRIBIR\",\n    \"MASCOTA_LEER\",\n    \"PRESTACION_ESCRIBIR\",\n    \"PRESTACION_LEER\",\n    \"REPORTE_VER\"\n  ]\n}"
+        }
+      ]
+    },
+    {
+      "name": "Propietarios",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/propietarios",
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{tokenAdmin}}",
+              "type": "string"
+            }
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Estado 200', () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "name": "200",
+          "originalRequest": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/propietarios",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{tokenAdmin}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "[\n  {\n    \"id\": 1,\n    \"dni\": \"12345671\",\n    \"nombres\": \"Ana Quispe\",\n    \"telefono\": \"987654321\"\n  },\n  {\n    \"id\": 2,\n    \"dni\": \"12345672\",\n    \"nombres\": \"Luis Mamani\",\n    \"telefono\": \"987654322\"\n  },\n  {\n    \"id\": 3,\n    \"dni\": \"12345673\",\n    \"nombres\": \"María Condori\",\n    \"telefono\": \"987654323\"\n  },\n  {\n    \"id\": 4,\n    \"dni\": \"12345674\",\n    \"nombres\": \"Pedro Flores\",\n    \"telefono\": \"987654324\"\n  },\n  {\n    \"id\": 5,\n    \"dni\": \"12345675\",\n    \"nombres\": \"Rosa Huamán\",\n    \"telefono\": \"987654325\"\n  }\n]"
+        }
+      ]
+    },
+    {
+      "name": "Prestaciones por especie",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/prestaciones?especie=PERRO",
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{tokenAdmin}}",
+              "type": "string"
+            }
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Estado 200', () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "name": "200",
+          "originalRequest": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/prestaciones?especie=PERRO",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{tokenAdmin}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "[\n  {\n    \"id\": 5,\n    \"codigo\": \"PRS-005\",\n    \"nombre\": \"Baño medicado\",\n    \"precio\": 60,\n    \"especieAplicable\": \"PERRO\",\n    \"activo\": true\n  },\n  {\n    \"id\": 1,\n    \"codigo\": \"PRS-001\",\n    \"nombre\": \"Consulta general\",\n    \"precio\": 50,\n    \"especieAplicable\": \"TODAS\",\n    \"activo\": true\n  },\n  {\n    \"id\": 9,\n    \"codigo\": \"PRS-009\",\n    \"nombre\": \"Control suspendido\",\n    \"precio\": 25,\n    \"especieAplicable\": \"TODAS\",\n    \"activo\": false\n  },\n  {\n    \"id\": 6,\n    \"codigo\": \"PRS-006\",\n    \"nombre\": \"Corte de uñas\",\n    \"precio\": 20,\n    \"especieAplicable\": \"TODAS\",\n    \"activo\": true\n  },\n  {\n    \"id\": 7,\n    \"codigo\": \"PRS-007\",\n    \"nombre\": \"Curación\",\n    \"precio\": 40,\n    \"especieAplicable\": \"TODAS\",\n    \"activo\": true\n  },\n  {\n    \"id\": 4,\n    \"codigo\": \"PRS-004\",\n    \"nombre\": \"Desparasitación\",\n    \"precio\": 30,\n    \"especieAplicable\": \"TODAS\",\n    \"activo\": true\n  },\n  {\n    \"id\": 8,\n    \"codigo\": \"PRS-008\",\n    \"nombre\": \"Peluquería canina\",\n    \"precio\": 70,\n    \"especieAplicable\": \"PERRO\",\n    \"activo\": true\n  },\n  {\n    \"id\": 2,\n    \"codigo\": \"PRS-002\",\n    \"nombre\": \"Vacuna canina\",\n    \"precio\": 80,\n    \"especieAplicable\": \"PERRO\",\n    \"activo\": true\n  }\n]"
+        }
+      ]
+    },
+    {
+      "name": "Obtener prestación",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/prestaciones/1",
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{tokenAdmin}}",
+              "type": "string"
+            }
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Estado 200', () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "name": "200",
+          "originalRequest": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/prestaciones/1",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{tokenAdmin}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"id\": 1,\n  \"codigo\": \"PRS-001\",\n  \"nombre\": \"Consulta general\",\n  \"precio\": 50,\n  \"especieAplicable\": \"TODAS\",\n  \"activo\": true\n}"
+        }
+      ]
+    },
+    {
+      "name": "Crear prestación",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/prestaciones",
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{tokenAdmin}}",
+              "type": "string"
+            }
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"codigo\": \"PRS-952\",\n  \"nombre\": \"Control Postman\",\n  \"precio\": 35,\n  \"especieAplicable\": \"TODAS\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Estado 201', () => pm.response.to.have.status(201));",
+              "pm.collectionVariables.set('prestacionId', pm.response.json().id);"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "name": "201",
+          "originalRequest": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/prestaciones",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{tokenAdmin}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"codigo\": \"PRS-952\",\n  \"nombre\": \"Control Postman\",\n  \"precio\": 35,\n  \"especieAplicable\": \"TODAS\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Created",
+          "code": 201,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"id\": 11,\n  \"codigo\": \"PRS-952\",\n  \"nombre\": \"Control Postman\",\n  \"precio\": 35,\n  \"especieAplicable\": \"TODAS\",\n  \"activo\": true\n}"
+        }
+      ]
+    },
+    {
+      "name": "Código duplicado 409",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/prestaciones",
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{tokenAdmin}}",
+              "type": "string"
+            }
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"codigo\": \"PRS-952\",\n  \"nombre\": \"Control Postman\",\n  \"precio\": 35,\n  \"especieAplicable\": \"TODAS\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Estado 409', () => pm.response.to.have.status(409));"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "name": "409",
+          "originalRequest": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/prestaciones",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{tokenAdmin}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"codigo\": \"PRS-952\",\n  \"nombre\": \"Control Postman\",\n  \"precio\": 35,\n  \"especieAplicable\": \"TODAS\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Conflict",
+          "code": 409,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"timestamp\": \"2026-10-30T11:12:10.9491109\",\n  \"status\": 409,\n  \"error\": \"Conflict\",\n  \"mensaje\": \"El código de prestación ya existe\",\n  \"ruta\": \"/api/v1/prestaciones\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "Editar prestación",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/prestaciones/{{prestacionId}}",
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{tokenAdmin}}",
+              "type": "string"
+            }
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"codigo\": \"PRS-952\",\n  \"nombre\": \"Control Postman\",\n  \"precio\": 36,\n  \"especieAplicable\": \"TODAS\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Estado 200', () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "name": "200",
+          "originalRequest": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/prestaciones/{{prestacionId}}",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{tokenAdmin}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"codigo\": \"PRS-952\",\n  \"nombre\": \"Control Postman\",\n  \"precio\": 36,\n  \"especieAplicable\": \"TODAS\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"id\": 11,\n  \"codigo\": \"PRS-952\",\n  \"nombre\": \"Control Postman\",\n  \"precio\": 36,\n  \"especieAplicable\": \"TODAS\",\n  \"activo\": true\n}"
+        }
+      ]
+    },
+    {
+      "name": "Dar de baja prestación",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/prestaciones/{{prestacionId}}/estado",
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{tokenAdmin}}",
+              "type": "string"
+            }
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"activo\": false\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Estado 200', () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "name": "200",
+          "originalRequest": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/prestaciones/{{prestacionId}}/estado",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{tokenAdmin}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"activo\": false\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"id\": 11,\n  \"codigo\": \"PRS-952\",\n  \"nombre\": \"Control Postman\",\n  \"precio\": 36,\n  \"especieAplicable\": \"TODAS\",\n  \"activo\": false\n}"
+        }
+      ]
+    },
+    {
+      "name": "Eliminar prestación sin atenciones",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/prestaciones/{{prestacionId}}",
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{tokenAdmin}}",
+              "type": "string"
+            }
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Estado 204', () => pm.response.to.have.status(204));"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "name": "204",
+          "originalRequest": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/prestaciones/{{prestacionId}}",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{tokenAdmin}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "status": "No Content",
+          "code": 204,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": ""
+        }
+      ]
+    },
+    {
+      "name": "Prestación usada 409",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/prestaciones/1",
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{tokenAdmin}}",
+              "type": "string"
+            }
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Estado 409', () => pm.response.to.have.status(409));"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "name": "409",
+          "originalRequest": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/prestaciones/1",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{tokenAdmin}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "status": "Conflict",
+          "code": 409,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"timestamp\": \"2026-10-30T11:12:10.9759826\",\n  \"status\": 409,\n  \"error\": \"Conflict\",\n  \"mensaje\": \"La prestación tiene atenciones. Utilice la opción de dar de baja\",\n  \"ruta\": \"/api/v1/prestaciones/1\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "Mascotas por propietario",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/mascotas?propietarioId=1",
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{tokenAdmin}}",
+              "type": "string"
+            }
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Estado 200', () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "name": "200",
+          "originalRequest": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/mascotas?propietarioId=1",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{tokenAdmin}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "[\n  {\n    \"id\": 1,\n    \"nombre\": \"Luna\",\n    \"especie\": \"PERRO\",\n    \"raza\": \"Mestizo\",\n    \"fechaNacimiento\": \"2022-03-01\",\n    \"sexo\": \"H\",\n    \"propietarioId\": 1,\n    \"propietarioNombre\": \"Ana Quispe\"\n  },\n  {\n    \"id\": 2,\n    \"nombre\": \"Michi\",\n    \"especie\": \"GATO\",\n    \"raza\": \"Siamés\",\n    \"fechaNacimiento\": \"2023-02-01\",\n    \"sexo\": \"M\",\n    \"propietarioId\": 1,\n    \"propietarioNombre\": \"Ana Quispe\"\n  }\n]"
+        }
+      ]
+    },
+    {
+      "name": "Mascota existente",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/mascotas/1",
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{tokenAdmin}}",
+              "type": "string"
+            }
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Estado 200', () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "name": "200",
+          "originalRequest": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/mascotas/1",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{tokenAdmin}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"id\": 1,\n  \"nombre\": \"Luna\",\n  \"especie\": \"PERRO\",\n  \"raza\": \"Mestizo\",\n  \"fechaNacimiento\": \"2022-03-01\",\n  \"sexo\": \"H\",\n  \"propietarioId\": 1,\n  \"propietarioNombre\": \"Ana Quispe\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "Mascota inexistente 404",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/mascotas/999999",
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{tokenAdmin}}",
+              "type": "string"
+            }
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Estado 404', () => pm.response.to.have.status(404));"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "name": "404",
+          "originalRequest": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/mascotas/999999",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{tokenAdmin}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "status": "Not Found",
+          "code": 404,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"timestamp\": \"2026-10-30T11:12:10.9984839\",\n  \"status\": 404,\n  \"error\": \"Not Found\",\n  \"mensaje\": \"Mascota no encontrada\",\n  \"ruta\": \"/api/v1/mascotas/999999\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "Mascota duplicada 409",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/mascotas",
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{tokenRecepcion}}",
+              "type": "string"
+            }
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nombre\": \"Luna\",\n  \"especie\": \"PERRO\",\n  \"raza\": \"Mestizo\",\n  \"fechaNacimiento\": \"2022-03-01\",\n  \"sexo\": \"H\",\n  \"propietarioId\": 1\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Estado 409', () => pm.response.to.have.status(409));"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "name": "409",
+          "originalRequest": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/mascotas",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{tokenRecepcion}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Luna\",\n  \"especie\": \"PERRO\",\n  \"raza\": \"Mestizo\",\n  \"fechaNacimiento\": \"2022-03-01\",\n  \"sexo\": \"H\",\n  \"propietarioId\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Conflict",
+          "code": 409,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"timestamp\": \"2026-10-30T11:12:10.9984839\",\n  \"status\": 409,\n  \"error\": \"Conflict\",\n  \"mensaje\": \"El propietario ya tiene una mascota con ese nombre\",\n  \"ruta\": \"/api/v1/mascotas\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "Validación 400",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/mascotas",
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{tokenRecepcion}}",
+              "type": "string"
+            }
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nombre\": \"A\",\n  \"especie\": \"PERRO\",\n  \"fechaNacimiento\": \"2099-01-01\",\n  \"sexo\": \"H\",\n  \"propietarioId\": 1\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Estado 400', () => pm.response.to.have.status(400));"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "name": "400",
+          "originalRequest": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/mascotas",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{tokenRecepcion}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"A\",\n  \"especie\": \"PERRO\",\n  \"fechaNacimiento\": \"2099-01-01\",\n  \"sexo\": \"H\",\n  \"propietarioId\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Bad Request",
+          "code": 400,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"timestamp\": \"2026-10-30T11:12:11.0318608\",\n  \"status\": 400,\n  \"error\": \"Bad Request\",\n  \"mensaje\": \"Datos inválidos\",\n  \"ruta\": \"/api/v1/mascotas\",\n  \"campos\": {\n    \"fechaNacimiento\": \"La fecha de nacimiento no puede ser futura\",\n    \"nombre\": \"el tamaño debe estar entre 2 y 40\"\n  }\n}"
+        }
+      ]
+    },
+    {
+      "name": "Registrar atención con descuento",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/atenciones",
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{tokenRecepcion}}",
+              "type": "string"
+            }
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"mascotaId\": 1,\n  \"peso\": 12.5,\n  \"diagnostico\": \"Control de prueba\",\n  \"detalles\": [\n    {\n      \"prestacionId\": 1,\n      \"cantidad\": 1\n    },\n    {\n      \"prestacionId\": 2,\n      \"cantidad\": 1\n    },\n    {\n      \"prestacionId\": 4,\n      \"cantidad\": 1\n    }\n  ]\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Estado 201', () => pm.response.to.have.status(201));",
+              "pm.collectionVariables.set('atencionId', pm.response.json().id);"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "name": "201",
+          "originalRequest": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/atenciones",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{tokenRecepcion}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"mascotaId\": 1,\n  \"peso\": 12.5,\n  \"diagnostico\": \"Control de prueba\",\n  \"detalles\": [\n    {\n      \"prestacionId\": 1,\n      \"cantidad\": 1\n    },\n    {\n      \"prestacionId\": 2,\n      \"cantidad\": 1\n    },\n    {\n      \"prestacionId\": 4,\n      \"cantidad\": 1\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Created",
+          "code": 201,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"id\": 6,\n  \"numero\": \"AT-000006\",\n  \"fecha\": \"2026-10-30T11:12:11.0541612\",\n  \"mascotaId\": 1,\n  \"mascotaNombre\": \"Luna\",\n  \"especie\": \"PERRO\",\n  \"propietarioNombre\": \"Ana Quispe\",\n  \"peso\": 12.5,\n  \"diagnostico\": \"Control de prueba\",\n  \"estado\": \"REGISTRADA\",\n  \"subtotal\": 160.0,\n  \"descuento\": 16.0,\n  \"total\": 144.0,\n  \"usuarioRegistro\": \"recepcion\",\n  \"motivoAnulacion\": null,\n  \"detalles\": [\n    {\n      \"id\": 10,\n      \"prestacionId\": 1,\n      \"prestacionNombre\": \"Consulta general\",\n      \"cantidad\": 1,\n      \"precioUnitario\": 50,\n      \"subtotal\": 50.0\n    },\n    {\n      \"id\": 11,\n      \"prestacionId\": 2,\n      \"prestacionNombre\": \"Vacuna canina\",\n      \"cantidad\": 1,\n      \"precioUnitario\": 80,\n      \"subtotal\": 80.0\n    },\n    {\n      \"id\": 12,\n      \"prestacionId\": 4,\n      \"prestacionNombre\": \"Desparasitación\",\n      \"cantidad\": 1,\n      \"precioUnitario\": 30,\n      \"subtotal\": 30.0\n    }\n  ]\n}"
+        }
+      ]
+    },
+    {
+      "name": "Consultar atención",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/atenciones/{{atencionId}}",
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{tokenAdmin}}",
+              "type": "string"
+            }
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Estado 200', () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "name": "200",
+          "originalRequest": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/atenciones/{{atencionId}}",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{tokenAdmin}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"id\": 6,\n  \"numero\": \"AT-000006\",\n  \"fecha\": \"2026-10-30T11:12:11.054161\",\n  \"mascotaId\": 1,\n  \"mascotaNombre\": \"Luna\",\n  \"especie\": \"PERRO\",\n  \"propietarioNombre\": \"Ana Quispe\",\n  \"peso\": 12.5,\n  \"diagnostico\": \"Control de prueba\",\n  \"estado\": \"REGISTRADA\",\n  \"subtotal\": 160.0,\n  \"descuento\": 16.0,\n  \"total\": 144.0,\n  \"usuarioRegistro\": \"recepcion\",\n  \"motivoAnulacion\": null,\n  \"detalles\": [\n    {\n      \"id\": 10,\n      \"prestacionId\": 1,\n      \"prestacionNombre\": \"Consulta general\",\n      \"cantidad\": 1,\n      \"precioUnitario\": 50,\n      \"subtotal\": 50.0\n    },\n    {\n      \"id\": 11,\n      \"prestacionId\": 2,\n      \"prestacionNombre\": \"Vacuna canina\",\n      \"cantidad\": 1,\n      \"precioUnitario\": 80,\n      \"subtotal\": 80.0\n    },\n    {\n      \"id\": 12,\n      \"prestacionId\": 4,\n      \"prestacionNombre\": \"Desparasitación\",\n      \"cantidad\": 1,\n      \"precioUnitario\": 30,\n      \"subtotal\": 30.0\n    }\n  ]\n}"
+        }
+      ]
+    },
+    {
+      "name": "Consulta con filtros",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/atenciones?mascota=lUn&especie=PERRO&estado=REGISTRADA",
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{tokenAdmin}}",
+              "type": "string"
+            }
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Estado 200', () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "name": "200",
+          "originalRequest": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/atenciones?mascota=lUn&especie=PERRO&estado=REGISTRADA",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{tokenAdmin}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "[\n  {\n    \"id\": 6,\n    \"numero\": \"AT-000006\",\n    \"fecha\": \"2026-10-30T11:12:11.054161\",\n    \"mascotaId\": 1,\n    \"mascotaNombre\": \"Luna\",\n    \"especie\": \"PERRO\",\n    \"propietarioNombre\": \"Ana Quispe\",\n    \"peso\": 12.5,\n    \"diagnostico\": \"Control de prueba\",\n    \"estado\": \"REGISTRADA\",\n    \"subtotal\": 160.0,\n    \"descuento\": 16.0,\n    \"total\": 144.0,\n    \"usuarioRegistro\": \"recepcion\",\n    \"motivoAnulacion\": null,\n    \"detalles\": [\n      {\n        \"id\": 10,\n        \"prestacionId\": 1,\n        \"prestacionNombre\": \"Consulta general\",\n        \"cantidad\": 1,\n        \"precioUnitario\": 50,\n        \"subtotal\": 50.0\n      },\n      {\n        \"id\": 11,\n        \"prestacionId\": 2,\n        \"prestacionNombre\": \"Vacuna canina\",\n        \"cantidad\": 1,\n        \"precioUnitario\": 80,\n        \"subtotal\": 80.0\n      },\n      {\n        \"id\": 12,\n        \"prestacionId\": 4,\n        \"prestacionNombre\": \"Desparasitación\",\n        \"cantidad\": 1,\n        \"precioUnitario\": 30,\n        \"subtotal\": 30.0\n      }\n    ]\n  },\n  {\n    \"id\": 5,\n    \"numero\": \"AT-000005\",\n    \"fecha\": \"2026-10-30T11:09:06.729222\",\n    \"mascotaId\": 1,\n    \"mascotaNombre\": \"Luna\",\n    \"especie\": \"PERRO\",\n    \"propietarioNombre\": \"Ana Quispe\",\n    \"peso\": 12.5,\n    \"diagnostico\": \"Control general de prueba\",\n    \"estado\": \"REGISTRADA\",\n    \"subtotal\": 160.0,\n    \"descuento\": 16.0,\n    \"total\": 144.0,\n    \"usuarioRegistro\": \"recepcion\",\n    \"motivoAnulacion\": null,\n    \"detalles\": [\n      {\n        \"id\": 7,\n        \"prestacionId\": 1,\n        \"prestacionNombre\": \"Consulta general\",\n        \"cantidad\": 1,\n        \"precioUnitario\": 50,\n        \"subtotal\": 50.0\n      },\n      {\n        \"id\": 8,\n        \"prestacionId\": 2,\n        \"prestacionNombre\": \"Vacuna canina\",\n        \"cantidad\": 1,\n        \"precioUnitario\": 80,\n        \"subtotal\": 80.0\n      },\n      {\n        \"id\": 9,\n        \"prestacionId\": 4,\n        \"prestacionNombre\": \"Desparasitación\",\n        \"cantidad\": 1,\n        \"precioUnitario\": 30,\n        \"subtotal\": 30.0\n      }\n    ]\n  }\n]"
+        }
+      ]
+    },
+    {
+      "name": "Tercer detalle de otra especie 409",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/atenciones",
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{tokenRecepcion}}",
+              "type": "string"
+            }
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"mascotaId\": 1,\n  \"peso\": 12.5,\n  \"diagnostico\": \"Control de prueba\",\n  \"detalles\": [\n    {\n      \"prestacionId\": 1,\n      \"cantidad\": 1\n    },\n    {\n      \"prestacionId\": 2,\n      \"cantidad\": 1\n    },\n    {\n      \"prestacionId\": 3,\n      \"cantidad\": 1\n    }\n  ]\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Estado 409', () => pm.response.to.have.status(409));"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "name": "409",
+          "originalRequest": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/atenciones",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{tokenRecepcion}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"mascotaId\": 1,\n  \"peso\": 12.5,\n  \"diagnostico\": \"Control de prueba\",\n  \"detalles\": [\n    {\n      \"prestacionId\": 1,\n      \"cantidad\": 1\n    },\n    {\n      \"prestacionId\": 2,\n      \"cantidad\": 1\n    },\n    {\n      \"prestacionId\": 3,\n      \"cantidad\": 1\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Conflict",
+          "code": 409,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"timestamp\": \"2026-10-30T11:12:11.109065\",\n  \"status\": 409,\n  \"error\": \"Conflict\",\n  \"mensaje\": \"La prestación Vacuna felina está inactiva o no corresponde a la especie de la mascota\",\n  \"ruta\": \"/api/v1/atenciones\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "Sin token 401",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/mascotas",
+        "auth": {
+          "type": "noauth"
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Estado 401', () => pm.response.to.have.status(401));"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "name": "401",
+          "originalRequest": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/mascotas",
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "status": "Unauthorized",
+          "code": 401,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"timestamp\": \"2026-10-30T11:12:11.109065\",\n  \"status\": 401,\n  \"error\": \"Unauthorized\",\n  \"mensaje\": \"Debe iniciar sesión para acceder a este recurso\",\n  \"ruta\": \"/api/v1/mascotas\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "Recepción sin permiso de anular 403",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/atenciones/{{atencionId}}/anular",
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{tokenRecepcion}}",
+              "type": "string"
+            }
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"motivo\": \"Registro duplicado por error\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Estado 403', () => pm.response.to.have.status(403));"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "name": "403",
+          "originalRequest": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/atenciones/{{atencionId}}/anular",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{tokenRecepcion}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"motivo\": \"Registro duplicado por error\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Forbidden",
+          "code": 403,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"timestamp\": \"2026-10-30T11:12:11.116946600\",\n  \"status\": 403,\n  \"error\": \"Forbidden\",\n  \"mensaje\": \"No tiene permisos para realizar esta operación\",\n  \"ruta\": \"/api/v1/atenciones/6/anular\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "Recepción sin permiso de reporte 403",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/reportes/atenciones-por-especie",
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{tokenRecepcion}}",
+              "type": "string"
+            }
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Estado 403', () => pm.response.to.have.status(403));"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "name": "403",
+          "originalRequest": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/reportes/atenciones-por-especie",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{tokenRecepcion}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "status": "Forbidden",
+          "code": 403,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"timestamp\": \"2026-10-30T11:12:11.121956500\",\n  \"status\": 403,\n  \"error\": \"Forbidden\",\n  \"mensaje\": \"No tiene permisos para realizar esta operación\",\n  \"ruta\": \"/api/v1/reportes/atenciones-por-especie\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "Veterinario sin permiso de registrar mascota 403",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/mascotas",
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{tokenVeterinario}}",
+              "type": "string"
+            }
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nombre\": \"Kira\",\n  \"especie\": \"PERRO\",\n  \"fechaNacimiento\": \"2023-01-01\",\n  \"sexo\": \"H\",\n  \"propietarioId\": 1\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Estado 403', () => pm.response.to.have.status(403));"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "name": "403",
+          "originalRequest": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/mascotas",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{tokenVeterinario}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Kira\",\n  \"especie\": \"PERRO\",\n  \"fechaNacimiento\": \"2023-01-01\",\n  \"sexo\": \"H\",\n  \"propietarioId\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Forbidden",
+          "code": 403,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"timestamp\": \"2026-10-30T11:12:11.125860700\",\n  \"status\": 403,\n  \"error\": \"Forbidden\",\n  \"mensaje\": \"No tiene permisos para realizar esta operación\",\n  \"ruta\": \"/api/v1/mascotas\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "Anular atención",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/atenciones/{{atencionId}}/anular",
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{tokenVeterinario}}",
+              "type": "string"
+            }
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"motivo\": \"Registro duplicado por error\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Estado 200', () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "name": "200",
+          "originalRequest": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/atenciones/{{atencionId}}/anular",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{tokenVeterinario}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"motivo\": \"Registro duplicado por error\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"id\": 6,\n  \"numero\": \"AT-000006\",\n  \"fecha\": \"2026-10-30T11:12:11.054161\",\n  \"mascotaId\": 1,\n  \"mascotaNombre\": \"Luna\",\n  \"especie\": \"PERRO\",\n  \"propietarioNombre\": \"Ana Quispe\",\n  \"peso\": 12.5,\n  \"diagnostico\": \"Control de prueba\",\n  \"estado\": \"ANULADA\",\n  \"subtotal\": 160.0,\n  \"descuento\": 16.0,\n  \"total\": 144.0,\n  \"usuarioRegistro\": \"recepcion\",\n  \"motivoAnulacion\": \"Registro duplicado por error\",\n  \"detalles\": [\n    {\n      \"id\": 10,\n      \"prestacionId\": 1,\n      \"prestacionNombre\": \"Consulta general\",\n      \"cantidad\": 1,\n      \"precioUnitario\": 50,\n      \"subtotal\": 50.0\n    },\n    {\n      \"id\": 11,\n      \"prestacionId\": 2,\n      \"prestacionNombre\": \"Vacuna canina\",\n      \"cantidad\": 1,\n      \"precioUnitario\": 80,\n      \"subtotal\": 80.0\n    },\n    {\n      \"id\": 12,\n      \"prestacionId\": 4,\n      \"prestacionNombre\": \"Desparasitación\",\n      \"cantidad\": 1,\n      \"precioUnitario\": 30,\n      \"subtotal\": 30.0\n    }\n  ]\n}"
+        }
+      ]
+    },
+    {
+      "name": "Reporte agregado",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/reportes/atenciones-por-especie",
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{tokenVeterinario}}",
+              "type": "string"
+            }
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Estado 200', () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "name": "200",
+          "originalRequest": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/reportes/atenciones-por-especie",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{tokenVeterinario}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "[\n  {\n    \"especie\": \"PERRO\",\n    \"cantidadAtenciones\": 2,\n    \"importeTotal\": 194.0\n  },\n  {\n    \"especie\": \"GATO\",\n    \"cantidadAtenciones\": 1,\n    \"importeTotal\": 90\n  }\n]"
+        }
+      ]
+    },
+    {
+      "name": "Cuenta inactiva 401",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/auth/login",
+        "auth": {
+          "type": "noauth"
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"username\": \"inactivo\",\n  \"password\": \"Vet2026*\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Estado 401', () => pm.response.to.have.status(401));"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "name": "401",
+          "originalRequest": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/auth/login",
+            "auth": {
+              "type": "noauth"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"inactivo\",\n  \"password\": \"Vet2026*\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Unauthorized",
+          "code": 401,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"timestamp\": \"2026-10-30T11:12:11.2238807\",\n  \"status\": 401,\n  \"error\": \"Unauthorized\",\n  \"mensaje\": \"Usuario o contraseña incorrectos\",\n  \"ruta\": \"/api/v1/auth/login\"\n}"
+        }
+      ]
+    }
+  ]
+}

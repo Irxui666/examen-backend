@@ -5,6 +5,8 @@ import java.time.*;
 import java.util.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 @Entity
 @Table(name = "mascota")
@@ -28,6 +30,7 @@ public class Mascota {
   private LocalDate fechaNacimiento;
 
   @Column(nullable = false, length = 1)
+  @JdbcTypeCode(SqlTypes.CHAR)
   private String sexo;
 
   @ManyToOne(fetch = FetchType.LAZY, optional = false)

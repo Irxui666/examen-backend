@@ -7,7 +7,7 @@ Examen Parcial II, versión B. Spring Boot 4.1.2, Java 21, Maven, Oracle, Flyway
 Se necesita Oracle activo y un esquema vacío. La conexión predeterminada usa `localhost:1522/freepdb1`, siguiendo tarea05. En SQL Developer, conectado como administrador al PDB correspondiente:
 
 ```sql
-CREATE USER VETANDES IDENTIFIED BY "Vet2026*";
+CREATE USER VETANDES IDENTIFIED BY "Vet2026";
 GRANT CREATE SESSION, CREATE TABLE, CREATE SEQUENCE TO VETANDES;
 ALTER USER VETANDES QUOTA UNLIMITED ON USERS;
 ```
@@ -25,7 +25,7 @@ Para cambiar la conexión, definir antes de ejecutar:
 ```powershell
 $env:DB_URL='jdbc:oracle:thin:@//localhost:1522/freepdb1'
 $env:DB_USERNAME='VETANDES'
-$env:DB_PASSWORD='Vet2026*'
+$env:DB_PASSWORD='Vet2026'
 ```
 
 `JWT_SECRET` sustituye la clave Base64 de desarrollo. Tokens de 3600 segundos. API: `http://localhost:8080/api/v1`. Swagger: `http://localhost:8080/swagger-ui.html`. CORS permite `http://localhost:4200`.
@@ -105,6 +105,6 @@ Código de prestación único; una prestación usada no se elimina y se puede da
 
 19 pruebas de integración con H2 en modo Oracle y la misma migración de Flyway. Verifican CRUD, JWT, BCrypt, permisos acumulados, errores, descuento, especie, rechazo sin registros parciales, anulación, filtros, reporte, Swagger y CORS. H2 es únicamente dependencia de pruebas.
 
-La colección `postman/VetAndes.postman_collection.json` incluye ejemplos reales de 200/201, 400, 401, 403, 404 y 409. Ejecutar primero los login para guardar los tokens. Los ejemplos y capturas se obtuvieron con el perfil H2 de pruebas, consumiendo la API real. Falta comprobar contra Oracle y mostrar las tablas en SQL Developer: no había un listener Oracle activo en el puerto configurado.
+La colección `postman/VetAndes.postman_collection.json` incluye ejemplos reales de 200/201, 400, 401, 403, 404 y 409. Ejecutar primero los login para guardar los tokens. Los ejemplos y capturas se obtuvieron con el perfil H2 de pruebas, consumiendo la API real. Se verificaron el arranque con Oracle, la validación del esquema, el login y las consultas de prestaciones, mascotas, atenciones y reporte. Las capturas y los ejemplos conservan su entorno H2 de pruebas.
 
 Ramas locales `main`, `develop` y `examen-b-condori`, etiqueta `v1.0-examen-u2`. Falta configurar y publicar el remoto propio `vetandes-backend`.

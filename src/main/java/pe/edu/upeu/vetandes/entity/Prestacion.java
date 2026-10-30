@@ -6,6 +6,7 @@ import java.time.*;
 import java.util.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.type.NumericBooleanConverter;
 
 @Entity
 @Table(name = "prestacion")
@@ -28,6 +29,7 @@ public class Prestacion {
   @Column(name = "especie_aplicable", nullable = false, length = 6)
   private String especieAplicable;
 
-  @Column(nullable = false)
+  @Column(nullable = false, columnDefinition = "NUMBER(1)")
+  @Convert(converter = NumericBooleanConverter.class)
   private Boolean activo = true;
 }

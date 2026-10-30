@@ -5,6 +5,7 @@ import java.time.*;
 import java.util.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.type.NumericBooleanConverter;
 
 @Entity
 @Table(name = "usuarios")
@@ -24,7 +25,8 @@ public class Usuario {
   @Column(name = "nombre_completo", nullable = false, length = 120)
   private String nombreCompleto;
 
-  @Column(nullable = false)
+  @Column(nullable = false, columnDefinition = "NUMBER(1)")
+  @Convert(converter = NumericBooleanConverter.class)
   private Boolean activo;
 
   @ManyToMany(fetch = FetchType.LAZY)
